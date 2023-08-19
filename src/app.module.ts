@@ -13,8 +13,7 @@ import { LoggerMiddleware } from './logger/logger.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('cats');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
-{
-}
+
