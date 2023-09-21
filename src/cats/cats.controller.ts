@@ -1,7 +1,7 @@
 import { Controller, HttpException, Param, ParseIntPipe, Patch, UseFilters } from '@nestjs/common';
 import { Delete, Get, Post, Put } from '@nestjs/common';
 import { PositiveIntPipe } from 'common/pipes/positiveint.pipe';
-import { HttpExceptionFilter } from 'http-exception.filter';
+import { HttpExceptionFilter } from 'common/exceptions/http-exception.filter';
 import { CatsService } from './cats.service';
 
 @Controller('cats')

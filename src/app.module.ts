@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
-import { LoggerMiddleware } from './logger/logger.middleware';
+import { LoggerMiddleware } from '../common/logger/logger.middleware';
 
 @Module({
   imports: [CatsModule, UsersModule],
