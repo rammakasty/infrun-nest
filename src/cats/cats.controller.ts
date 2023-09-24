@@ -1,34 +1,38 @@
-import { Controller, HttpException, Param, ParseIntPipe, Patch, UseFilters } from '@nestjs/common';
-import { Delete, Get, Post, Put } from '@nestjs/common';
-import { PositiveIntPipe } from 'common/pipes/positiveint.pipe';
+import { Body, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Put } from '@nestjs/common';
 import { HttpExceptionFilter } from 'common/exceptions/http-exception.filter';
+import { SuccessInterceptor } from 'common/interceptors/success.interceptor';
 import { CatsService } from './cats.service';
-
+import { CatRequestDto } from'./DTO/CatRequestDto'
 @Controller('cats')
+@UseInterceptors(SuccessInterceptor)
+@UseFilters(HttpExceptionFilter)
 export class CatsController {
-    constructor(private readonly catsService: CatsService) {}
+  constructor(private readonly catsService: CatsService) {}
 
-    @Get()
-    @UseFilters(HttpExceptionFilter)
-    getAllCat() {
-        throw new HttpException('api broken', 401)
-        return 'get all cat api'
-    }
-    
-    @Get(':id')
-    getOneCat(@Param('id', ParseIntPipe, PositiveIntPipe) param: number) {
-        console.log(param);
-        console.log(typeof param);
-        return 'get one cat api' 
-    }
+  @Get()
+  getCurrentCat() {
+    return 'current cat';
+  }
 
+  @Post()
+  async signUp(@Body() body: CatRequestDto) {
+    console.log(body);
+    return 'signup';
+  }
 
+  @Post('login')
+  logIn() {
+    return 'login';
+  }
 
-    @Post()
-    GetOneCat() {
-        return 'create cat api'
+  @Post('logout')
+  logOut() {
+    return 'logout';
+  }
 
-    }
-
-    }
-
+  @Post('upload/cats')
+  uploadCatImg() {
+    return 'uploadImg';
+  }
+}
