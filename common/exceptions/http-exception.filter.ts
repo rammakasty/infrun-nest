@@ -13,15 +13,23 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
-    const error = exception.getResponse()
+    const error = exception.getResponse() as
+      | string
+      | { error: string; statusCode: number; message: string | string[] };
 
-
-    // express에서와 비슷   res.status(400).send({요청 실패}) json으로만 send를 할거다
-    response.status(status).json({
-      success: false,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-      error,
-    });
+    if (typeof error === 'string') {
+      response.status(status).json({
+        success: false,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        error,
+      });
+    } else {
+      response.status(status).json({
+        success: false,
+        timestamp: new Date().toISOString(),
+        ...error,
+      });
+    }
   }
 }
