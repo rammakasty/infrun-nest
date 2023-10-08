@@ -18,5 +18,13 @@ export class CatsService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
+
+    const cat = await this.catModel.create({
+        email,
+        name,
+        password: hashedPassword,
+    })
+
+    return cat
 }
 }
